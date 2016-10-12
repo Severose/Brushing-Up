@@ -4,7 +4,7 @@ import re
 # Constants
 punctuation = string.punctuation
 digits = string.digits
-topics = {'gis':0, 'security':1, 'photo':2, 'mathematica':3, 'unix':4, 'wordpress':5, 'scifi':6, 'electronics':7, 'android':8, 'apple':9}
+topics = ['gis' , 'security' , 'photo' , 'mathematica' , 'unix' , 'wordpress' , 'scifi' , 'electronics' , 'android' , 'apple']
 
 def readdata( dataset,train ):
 	# Remove "title" words from each dataset
@@ -43,7 +43,7 @@ def readdata( dataset,train ):
 	# For training data
 	if train:
 		# Get the current training set's topic ID and remove the topic word from the list
-		topic = topics[dataset[0]]
+		topic = topics.index(dataset[0])
 		dataset = dataset[1:]
 
 		# Populate classify matrix with training data
@@ -57,12 +57,14 @@ def readdata( dataset,train ):
 
 	# For input data
 	else:
+		probabilities = [0 for i in range(10)]
 		for word in dataset:
 			for i in range(10):
 				if (len(word) > 3) and (word in prob[i]):
 					probabilities[i] = probabilities[i] + prob[i][word]
-		print max(probabilities)
-		print probabilities
+ 
+		print topics[probabilities.index(max(probabilities))] 
+
 
 # Open training file
 filein = open('training.json', 'r')
@@ -72,7 +74,7 @@ trainingData = []
 classify = []
 total = []
 unique = []
-prob = []
+prob = []			# Word probabilities
 
 
 # Initialize the classify matrix
@@ -105,7 +107,7 @@ filein.close()
 first = True
 train = False
 guess = ""
-probabilities = []
+probabilities = []		# Probability for a set to be in each category
 
 # Initialize the matrices
 for i in range(10):
