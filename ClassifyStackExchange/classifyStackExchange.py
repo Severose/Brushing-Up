@@ -6,34 +6,31 @@ punctuation = string.punctuation
 digits = string.digits
 topics = ['gis' , 'security' , 'photo' , 'mathematica' , 'unix' , 'wordpress' , 'scifi' , 'electronics' , 'android' , 'apple']
 
+def rem( s , dataset ):
+	string = dataset.find(s)
+	dataset = dataset[:string] + " " + dataset[string+len(s):]
+	return dataset
+
 def readdata( dataset,train ):
 	# Remove "title" words from each dataset
 	if train :
-		string = dataset.find("topic")
-		dataset = dataset[:string] + " " + dataset[string+5:]
-	string = dataset.find("question")
-	dataset = dataset[:string] + " " + dataset[string+8:]
-	string = dataset.find("excerpt")
-	dataset = dataset[:string] + " " + dataset[string+7:]
+		dataset = rem("topic", dataset)
+	dataset = rem("question", dataset)
+	dataset = rem("excerpt", dataset)
 
 	# Remove string formatting characters
 	while dataset.find("\\n") >= 0:
-		string = dataset.find("\\n")
-		dataset = dataset[:string] + " " + dataset[string+2:]
+		dataset = rem("\\n", dataset)
 	while dataset.find("\\r") >= 0:
-		string = dataset.find("\\r")
-		dataset = dataset[:string] + " " + dataset[string+2:]
+		dataset = rem("\\r", dataset)
 	while dataset.find("\\x") >= 0:
-		string = dataset.find("\\x")
-		dataset = dataset[:string] + " " + dataset[string+2:]
+		dataset = rem("\\x", dataset)
 
 	# Special treatment for special characters (instances of this/that and contractions)
 	while dataset.find("/") >= 0:
-		string = dataset.find("/")
-		dataset = dataset[:string] + " " + dataset[string+1:]
+		dataset = rem("/", dataset)
 	while dataset.find("\'") >= 0:
-		string = dataset.find("\'")
-		dataset = dataset[:string] + " " + dataset[string+1:]
+		dataset = rem("\'", dataset)
 
 	# Remove all but alphabet characters and separate the words
 	regex = re.compile('[^a-zA-Z]')
@@ -65,6 +62,8 @@ def readdata( dataset,train ):
  
 		print topics[probabilities.index(max(probabilities))] 
 
+
+	
 
 # Open training file
 filein = open('training.json', 'r')
