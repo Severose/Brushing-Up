@@ -10,17 +10,23 @@ list::list () {
 }
 
 void list::push (Node *temp) {
+	// If list is empty
 	if (len == 0)
 	{
 		head = temp;
+		head->next = NULL;
 		tail = head;
+		tail->next = NULL;
 	}
 
+	// If one element in list
 	if (len == 1)
 	{
-		head->next = temp;
 		tail = temp;
+		head->next = tail;
 	}
+
+	// Otherwise add to end
 	else
 	{
 		tail->next = temp;
@@ -30,7 +36,9 @@ void list::push (Node *temp) {
 	len++;
 }
 
-void list::pop () {
+int list::pop () {
+	int val = tail->value;
+
 	Node temp;
 	temp.next = tail;
 
@@ -41,15 +49,20 @@ void list::pop () {
 
 	delete &temp;
 	len--;
+
+	return val;
 }
 
-void list::print (list) {
+void list::print () {
+	int n = len;
 	Node* temp;
+	temp = head;
 	std::cout << "List:\n  ";
-	while (temp != NULL)
+	while (n > 0)
 	{
 		std::cout << temp->value << "\n  ";
 		temp = temp->next;
+		n--;
 	}
 }
 
