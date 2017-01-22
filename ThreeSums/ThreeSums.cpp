@@ -1,17 +1,19 @@
 #include <iostream>
 #include "List.cpp"
 
-
 int main () {
 	list l;
 
-	l.push(1);
-	l.push(2);
-	l.push(3);
-	l.push(4);
-	l.push(5);
-	l.push(6);
+	for (int i = 1; i <= 6; ++i)
+	{
+		Node temp;
+		temp->value = i
+		l.push(&temp);
+	}
+
 	l.pop();
 
 	l.print();
+
+	return 0;
 }

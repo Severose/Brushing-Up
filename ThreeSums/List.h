@@ -1,19 +1,19 @@
 class list {
 	struct Node {
-		int* next;
+		Node* next;
 
 		int value;
 	} node;
 
-	Node head;
-	Node tail;
+	Node* head;
+	Node* tail;
 	int len;
 
 
 public:
 	list ();
 	~list ();
-	void push (int);
+	void push (Node*);
 	void pop ();
 	void print (list);
 };

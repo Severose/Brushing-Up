@@ -1,7 +1,6 @@
 #include "List.h"
 
 #include <iostream>
-#include <iterator>
 
 list::list () {
 	head = NULL;
@@ -10,20 +9,23 @@ list::list () {
 	len = 0;
 }
 
-void list::push (int n) {
-	Node temp;
-	temp.value = n;
-
+void list::push (Node *temp) {
 	if (len == 0)
+	{
 		head = temp;
 		tail = head;
+	}
 
 	if (len == 1)
-		head.next = temp;
+	{
+		head->next = temp;
 		tail = temp;
+	}
 	else
-		tail.next = temp;
+	{
+		tail->next = temp;
 		tail = temp;
+	}
 
 	len++;
 }
@@ -42,9 +44,13 @@ void list::pop () {
 }
 
 void list::print (list) {
+	Node* temp;
 	std::cout << "List:\n  ";
-	for (iterator::iterator<list> i = head; i != NULL; ++i)
-		std::cout << i->value << "\n  ";
+	while (temp != NULL)
+	{
+		std::cout << temp->value << "\n  ";
+		temp = temp->next;
+	}
 }
 
 list::~list () {

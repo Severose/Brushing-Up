@@ -1,8 +1,13 @@
 all: ThreeSums
 
-ThreeSums: List.o ThreeSums.cpp
-	g++ ThreeSums.cpp List.o -o ThreeSums
+ThreeSums: List.o ThreeSums.o
+	g++ List.o ThreeSums.o -o ThreeSums
+
+ThreeSums.o: ThreeSums.cpp
+	g++ -c ThreeSums.cpp -o ThreeSums.o
 
 List.o: List.h List.cpp
-	g++ List.cpp -o List.o
-	
+	g++ -c List.cpp -o List.o
+
+clean:
+	rm -f *.o $@
